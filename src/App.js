@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import Routes from 'routes';
+import { AppBar, Toolbar } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const theme = createTheme();
+
+const App = () => {
+  return <ThemeProvider theme={theme}>
+    <AppBar elevation={1} title="Code Challange"  >
+      <Toolbar />
+    </AppBar>
+    <main style={{ marginTop: '92px' }}>
+      <Routes />
+    </main>
+  </ThemeProvider >;
+};
 
 export default App;
