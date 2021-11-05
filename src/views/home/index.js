@@ -37,16 +37,11 @@ const Home = () => {
       <Grid item xs={12}>
         {userData ? <CustomTable title='Users' data={processedData}
           options={{
+            onRowClick:(event, data) => {
+              navigate(`/post/${data.id}`);
+            },
             ignoreKeys: ['id'],
-            actions: [
-              {
-                name: 'Actions',
-                label: 'Show Posts',
-                function: (event, data) => {
-                  navigate(`/post/${data.id}`);
-                }
-              }
-            ]
+             
           }} />
           : <CircularProgress />}
       </Grid>

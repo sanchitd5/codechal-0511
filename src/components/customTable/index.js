@@ -66,7 +66,7 @@ const breakObject = (obj) => {
 
 const RenderRow = (props) => {
   return props.keys.map((key, index) => {
-    return (<TableCell key={`cell${index}${Math.random()}`}>
+    return (<TableCell style={props.style} onClick={props.onClick} key={`cell${index}${Math.random()}`}>
       <Typography varient="body1">
         {Array.isArray(props.data[key]) ? breakObject(props.data[key]) : String(props.data[key])}
       </Typography>
@@ -168,11 +168,15 @@ const CustomTable = (props) => {
     return data.map((row, index) => {
       return (
         <TableRow key={Math.random()}>
-          <RenderRow key={Math.random()} data={row} keys={_keys} />
+          <RenderRow style={props?.options?.onRowClick instanceof Function ? { cursor: 'pointer' } : undefined} onClick={(event) => {
+            if (props.options.onRowClick instanceof Function) {
+              props.options.onRowClick(event, row);
+            }
+          }} key={Math.random()} data={row} keys={_keys} />
           {renderActions(props.data[index])}
         </TableRow>);
     });
-  }, [_keys, props.data, renderActions]);
+  }, [_keys, props.data, props.options, renderActions]);
 
   const renderActionHeaders = () => {
     return props.options.actions.map(value => {
@@ -252,6 +256,7 @@ const CustomTable = (props) => {
 CustomTable.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
   options: PropTypes.shape({
+    onRowClick: PropTypes.func,
     ignoreKeys: PropTypes.arrayOf(PropTypes.string),
     actions: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.string,
